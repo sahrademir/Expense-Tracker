@@ -31,7 +31,7 @@ def create_expense(
     return new_expense
 
 @router.get("/", response_model=list[ExpenseResponse])
-def get_expense(
+def get_expenses(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
@@ -40,7 +40,7 @@ def get_expense(
     ).all()
     return expenses
 
-@router.put("/{expense_id}")
+@router.put("/{expense_id}", response_model=ExpenseResponse)
 def put_expense(
     expense_id: int,
     expense: ExpenseCreate,
@@ -53,7 +53,7 @@ def put_expense(
     ).first()
 
     if existing_expense is None:
-        raise HTTPExcption(
+        raise HTTPException(
             status_code = 404,
             detail = "Expense not found"
         )
@@ -67,7 +67,7 @@ def put_expense(
     db.refresh(existing_expense)
     return existing_expense
 
-@router.delete("/{expense_id}")
+@router.delete("/{expense_id}", status_code=200)
 def delete_expense(
     expense_id: int,
     db: Session = Depends(get_db),
