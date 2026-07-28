@@ -1,6 +1,9 @@
 import bcrypt #to hash and verify passwords
+from jwt import ExpiredSignatureError
+from jwt import InvalidTokenError
 import jwt #after user authentication is using JWT
 import secrets
+from fast.api import HTTPException
 from datetime import datetime, timedelta, timezone
 from app.core.config import (
     SECRET_KEY,
@@ -29,10 +32,21 @@ def create_access_token(data):
     return token
 
 def verify_token(token):
-    payload = jwt.decode(
-        token,
-        SECRET_KEY,
-        algorithms=[ALGORITHM]
-    )
-    return payload
+    try:
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=[ALGORITHM]
+        )
+        return payload
+    except ExpiredSignatureError:
+        raise HTTPException(
+            status_code=401,
+            detail="Token has expired."
+        )
+    except InvalidTokenError:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid token."
+        )
 
