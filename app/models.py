@@ -1,4 +1,4 @@
-from datetime import datetime, timezone, the_column_type
+from datetime import datetime, timezone
 from decimal import Decimal
 from enum import StrEnum
 

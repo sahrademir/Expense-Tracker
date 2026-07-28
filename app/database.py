@@ -22,3 +22,4 @@ def get_db():
 # dependency injection def get_db()
 # yield not return bcs. return finishes completely
 # with yield, the session is being lent to the endpoint
+
