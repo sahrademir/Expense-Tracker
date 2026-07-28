@@ -4,8 +4,6 @@ from app.routers import users, expenses
 
 app = FastAPI(title="Expense Tracker API")
 
-Base.metadata.create_all(bind=engine)
-
 app.include_router(users.router)
 app.include_router(expenses.router)
 
