@@ -25,7 +25,7 @@ def register(
 
     if existing_user:
         raise HTTPException(
-            status_code=400,
+            status_code=409,
             detail="Email already exists."
         )
 

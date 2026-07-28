@@ -3,7 +3,7 @@ from jwt import ExpiredSignatureError
 from jwt import InvalidTokenError
 import jwt #after user authentication is using JWT
 import secrets
-from fast.api import HTTPException
+from fastapi import HTTPException
 from datetime import datetime, timedelta, timezone
 from app.core.config import (
     SECRET_KEY,
