@@ -1,7 +1,8 @@
 from decimal import Decimal
+from typing import Annotated
 from datetime import datetime
 from enum import StrEnum
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 
 class ExpenseCategory(StrEnum):
     FOOD = "Food"
@@ -14,9 +15,17 @@ class ExpenseCategory(StrEnum):
 
 
 class UserCreate(BaseModel):
-    username: str
+    username: Annotated[
+        str,
+        Field(min_length=3, max_length=30)
+    ]
+
     email: EmailStr
-    password: str
+
+    password: Annotated[
+        str,
+        Field(min_length=8, max_length=64)
+    ]
 
 class UserResponse(BaseModel):
     id: int
@@ -29,10 +38,23 @@ class UserResponse(BaseModel):
 
 
 class ExpenseCreate(BaseModel):
-    title: str
-    amount: Decimal
+    title: Annotated[
+    str,
+    Field(min_length=1, max_length=100)
+    ]
+
+    amount: Annotated[
+    Decimal,
+    Field(gt=0)
+    ]
+
     category: ExpenseCategory
-    description: str
+    
+    description: Annotated[
+    str,
+    Field(max_length=500)
+    ]
+    
 
 class ExpenseResponse(BaseModel):
     id: int
