@@ -25,6 +25,7 @@ class PrimaryButton extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                     ),
                     child: SizedBox(
+                        width: double.infinity,
                         height: 50,
                         child: Center(
                             child: Text(

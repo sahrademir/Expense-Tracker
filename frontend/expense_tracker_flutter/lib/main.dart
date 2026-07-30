@@ -3,6 +3,9 @@ import 'core/theme.dart';
 import 'screens/welcome/welcome_screen.dart';
 import 'screens/login/login_screen.dart';
 import 'screens/register/register_screen.dart';
+import 'screens/dashboard/dashboard_screen.dart';
+import 'screens/add_expense/add_expense_screen.dart';
+import 'screens/edit_expense/edit_expense_screen.dart';
 
 void main() {
   runApp(const ExpenseTrackerApp());
@@ -21,6 +24,9 @@ class ExpenseTrackerApp extends StatelessWidget {
         "/": (context) => WelcomeScreen(),
         "/login": (context) => LoginScreen(),
         "/register": (context) => RegisterScreen(),
+        "/dashboard": (context) => const DashboardScreen(),
+        "/add-expense": (context) => const AddExpenseScreen(),
+        "/edit-expense": (context) => const EditExpenseScreen(),
       },
     );
   }

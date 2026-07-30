@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AuthCard extends StatelessWidget {
+class DashboardCard extends StatelessWidget {
   final Widget child;
-  final double heightFactor;
 
-  const AuthCard({
+  const DashboardCard({
     super.key,
     required this.child,
-    this.heightFactor = 0.40,
   });
 
   @override
@@ -16,14 +14,22 @@ class AuthCard extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height * heightFactor,
-        padding: const EdgeInsets.fromLTRB(32, 36, 32, 40),
+        height: MediaQuery.of(context).size.height * .68,
+
+        padding: const EdgeInsets.fromLTRB(
+          24,
+          28,
+          24,
+          16,
+        ),
+
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.vertical(
-            top: Radius.circular(24),
+            top: Radius.circular(26),
           ),
         ),
+
         child: child,
       ),
     );
