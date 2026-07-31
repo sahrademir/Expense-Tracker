@@ -2,9 +2,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.schemas import UserCreate, UserResponse
+from app.schemas import UserCreate, UserResponse, UserUpdate, ChangePassword
 from app.models import User
 from app.auth import hash_password, verify_password, create_access_token
+from app.dependencies import get_current_user
 
 router = APIRouter(
     prefix="/users",
@@ -77,4 +78,65 @@ def login(
     return {
         "access_token": token,
         "token_type": "bearer"
+    }
+
+@router.get("/me", response_model=UserResponse)
+def get_profile(
+    current_user: User = Depends(get_current_user),
+):
+    return current_user
+
+@router.put("/me", response_model=UserResponse)
+def update_profile(
+    user: UserUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # Email başka bir kullanıcı tarafından kullanılıyor mu?
+    existing_email = (
+        db.query(User)
+        .filter(
+            User.email == user.email,
+            User.id != current_user.id,
+        )
+        .first()
+    )
+
+    if existing_email:
+        raise HTTPException(
+            status_code=409,
+            detail="Email already exists.",
+        )
+
+    current_user.username = user.username
+    current_user.email = user.email
+
+    db.commit()
+    db.refresh(current_user)
+
+    return current_user
+
+@router.put("/change-password")
+def change_password(
+    password_data: ChangePassword,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    if not verify_password(
+        password_data.current_password,
+        current_user.hashed_password,
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Current password is incorrect.",
+        )
+
+    current_user.hashed_password = hash_password(
+        password_data.new_password
+    )
+
+    db.commit()
+
+    return {
+        "message": "Password updated successfully."
     }
