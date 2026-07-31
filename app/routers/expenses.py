@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from app.database import get_db
-from app.schemas import ExpenseCreate, ExpenseResponse
-from app.models import User, Expense
+from app.schemas import ExpenseCreate, ExpenseResponse, StatisticsResponse, CategoryStatistic
+from app.models import User, Expense, TransactionType
 from app.dependencies import get_current_user
 
 router = APIRouter(
@@ -20,6 +21,7 @@ def create_expense(
             title=expense.title,
             amount=expense.amount,
             category=expense.category,
+            type=expense.type,
             description=expense.description,
             owner_id = current_user.id
         )
@@ -61,6 +63,7 @@ def put_expense(
     existing_expense.title = expense.title
     existing_expense.amount = expense.amount
     existing_expense.category = expense.category
+    existing_expense.type = expense.type
     existing_expense.description = expense.description
 
     db.commit()
@@ -87,5 +90,84 @@ def delete_expense(
     db.delete(expense)
     db.commit()
     return {"message": "Expense deleted successfully."}
+
+@router.get(
+    "/statistics",
+    response_model=StatisticsResponse,
+)
+def get_statistics(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+
+    income_total = (
+        db.query(func.sum(Expense.amount))
+        .filter(
+            Expense.owner_id == current_user.id,
+            Expense.type == TransactionType.INCOME,
+        )
+        .scalar()
+        or 0
+    )
+
+    expense_total = (
+        db.query(func.sum(Expense.amount))
+        .filter(
+            Expense.owner_id == current_user.id,
+            Expense.type == TransactionType.EXPENSE,
+        )
+        .scalar()
+        or 0
+    )
+
+    balance = income_total - expense_total
+
+    expense_categories = (
+        db.query(
+            Expense.category,
+            func.sum(Expense.amount),
+        )
+        .filter(
+            Expense.owner_id == current_user.id,
+            Expense.type == TransactionType.EXPENSE,
+        )
+        .group_by(Expense.category)
+        .all()
+    )
+
+    income_categories = (
+        db.query(
+            Expense.category,
+            func.sum(Expense.amount),
+        )
+        .filter(
+            Expense.owner_id == current_user.id,
+            Expense.type == TransactionType.INCOME,
+        )
+        .group_by(Expense.category)
+        .all()
+    )
+
+    return StatisticsResponse(
+        total_income=income_total,
+        total_expense=expense_total,
+        balance=balance,
+
+        expenses=[
+            CategoryStatistic(
+                category=category.value,
+                amount=amount,
+            )
+            for category, amount in expense_categories
+        ],
+
+        income=[
+            CategoryStatistic(
+                category=category.value,
+                amount=amount,
+            )
+            for category, amount in income_categories
+        ],
+    )
 
     

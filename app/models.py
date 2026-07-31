@@ -25,6 +25,10 @@ class ExpenseCategory(StrEnum):
     FUN = "Fun"
     OTHER = "Other"
 
+class TransactionType(StrEnum):
+    INCOME = "Income"
+    EXPENSE = "Expense"
+
 
 class User(Base):
     __tablename__ = "users"
@@ -50,6 +54,10 @@ class Expense(Base):
     title = Column(String(100), nullable=False)
     amount = Column(Numeric(10, 2), nullable=False)
     category = Column(Enum(ExpenseCategory), nullable=False)
+    type = Column(
+        Enum(TransactionType),
+        nullable=False,
+    )
     description = Column(String(255), nullable=True)
 
     owner_id = Column(
