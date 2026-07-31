@@ -35,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     "/edit-profile",
-                  )
+                  );
                 },
               ),
 
@@ -46,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     "/change-password",
-                  )
+                  );
                 },
               ),
 
@@ -57,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     "/about",
-                  )
+                  );
                 },
               ),
 
