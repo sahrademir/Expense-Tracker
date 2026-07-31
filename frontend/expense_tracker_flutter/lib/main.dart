@@ -6,6 +6,8 @@ import 'screens/register/register_screen.dart';
 import 'screens/dashboard/dashboard_screen.dart';
 import 'screens/add_expense/add_expense_screen.dart';
 import 'screens/edit_expense/edit_expense_screen.dart';
+import 'package:expense_tracker_flutter/screens/statistics_screen.dart';
+import 'package:expense_tracker_flutter/screens/profile_screen.dart';
 
 void main() {
   runApp(const ExpenseTrackerApp());
@@ -27,6 +29,8 @@ class ExpenseTrackerApp extends StatelessWidget {
         "/dashboard": (context) => const DashboardScreen(),
         "/add-expense": (context) => const AddExpenseScreen(),
         "/edit-expense": (context) => const EditExpenseScreen(),
+        '/statistics': (context) => const StatisticsScreen(),
+        '/profile': (context) => const ProfileScreen(),
       },
     );
   }

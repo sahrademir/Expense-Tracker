@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../core/colors.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -19,6 +18,8 @@ class BottomNavBar extends StatelessWidget {
       labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
 
       onDestinationSelected: (index) {
+        if (index == currentIndex) return;
+
         switch (index) {
           case 0:
             Navigator.pushReplacementNamed(context, "/dashboard");
@@ -29,35 +30,31 @@ class BottomNavBar extends StatelessWidget {
             break;
 
           case 2:
-            Navigator.pushReplacementNamed(context, "/dashboard");
+            Navigator.pushReplacementNamed(context, "/statistics");
             break;
 
           case 3:
-            Navigator.pushReplacementNamed(context, "/dashboard");
+            Navigator.pushReplacementNamed(context, "/profile");
             break;
         }
       },
 
       destinations: const [
-
         NavigationDestination(
           icon: Icon(Icons.home_outlined),
           selectedIcon: Icon(Icons.home),
           label: "",
         ),
-
         NavigationDestination(
           icon: Icon(Icons.add_circle_outline),
           selectedIcon: Icon(Icons.add_circle),
           label: "",
         ),
-
         NavigationDestination(
-          icon: Icon(Icons.show_chart_outlined),
-          selectedIcon: Icon(Icons.show_chart),
+          icon: Icon(Icons.pie_chart_outline),
+          selectedIcon: Icon(Icons.pie_chart),
           label: "",
         ),
-
         NavigationDestination(
           icon: Icon(Icons.person_outline),
           selectedIcon: Icon(Icons.person),
