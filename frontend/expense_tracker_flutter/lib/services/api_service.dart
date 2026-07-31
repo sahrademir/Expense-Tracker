@@ -52,8 +52,6 @@ class ApiService {
   }
 
 
-
-
   // ==========================
   // AUTH
   // ==========================
@@ -85,7 +83,6 @@ class ApiService {
     );
 
 
-
     if(response.statusCode == 200 ||
        response.statusCode == 201){
 
@@ -101,12 +98,6 @@ class ApiService {
     );
 
   }
-
-
-
-
-
-
 
   static Future<String?> login(
       String email,
@@ -134,7 +125,6 @@ class ApiService {
     );
 
 
-
     if(response.statusCode == 200){
 
 
@@ -159,11 +149,6 @@ class ApiService {
   }
 
 
-
-
-
-
-
   // ==========================
   // EXPENSES
   // ==========================
@@ -182,8 +167,6 @@ class ApiService {
 
     );
 
-
-
     if(response.statusCode==200){
 
 
@@ -199,17 +182,11 @@ class ApiService {
 
     }
 
-
     throw Exception(
       "Cannot fetch expenses"
     );
 
   }
-
-
-
-
-
 
   static Future<Expense> createExpense(
       Expense expense
@@ -230,8 +207,6 @@ class ApiService {
 
     );
 
-
-
     if(response.statusCode==200 ||
        response.statusCode==201){
 
@@ -242,7 +217,6 @@ class ApiService {
 
 
     }
-
 
     throw Exception(
       "Create expense failed"
