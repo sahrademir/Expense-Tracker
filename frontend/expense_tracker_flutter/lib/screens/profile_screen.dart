@@ -31,19 +31,34 @@ class ProfileScreen extends StatelessWidget {
               ProfileMenuItem(
                 icon: Icons.edit,
                 title: "Edit Profile",
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    "/edit-profile",
+                  )
+                },
               ),
 
               ProfileMenuItem(
                 icon: Icons.lock_outline,
                 title: "Change Password",
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    "/change-password",
+                  )
+                },
               ),
 
               ProfileMenuItem(
                 icon: Icons.info_outline,
                 title: "About",
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    "/about",
+                  )
+                },
               ),
 
               ProfileMenuItem(
