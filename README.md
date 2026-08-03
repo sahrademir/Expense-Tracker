@@ -21,6 +21,14 @@ A full-stack expense tracking application built with **Flutter** and **FastAPI**
 - Income & expense summary
 - Recent transactions list
 
+## 📱 Screenshots
+
+<img width="805" height="530" alt="Ekran görüntüsü 2026-08-03 092255" src="https://github.com/user-attachments/assets/f91a7827-b5c9-48f6-8829-0832a2667655" />
+<img width="807" height="530" alt="Ekran görüntüsü 2026-08-03 092302" src="https://github.com/user-attachments/assets/bdd8ff41-8ae3-40b7-83d3-93116bc8f1d4" />
+<img width="437" height="697" alt="Ekran görüntüsü 2026-08-03 092830" src="https://github.com/user-attachments/assets/6594b023-3415-4b98-bce6-e17b9f9eff14" />
+<img width="263" height="418" alt="Ekran görüntüsü 2026-08-03 092520" src="https://github.com/user-attachments/assets/e47fe358-0210-40f3-a4b6-08468648ce4e" />
+
+
 ## 🛠️ Tech Stack
 
 ### Frontend
